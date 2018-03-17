@@ -9,7 +9,7 @@ CHANNEL_R_IR = 8
 def publisher():
     pub = rospy.Publisher('state', Float64, queue_size=10)
     rospy.init_node('state_estimate', anonymous=True)
-    rate = rospy.Rate(10)
+    rate = rospy.Rate(50)
     pololu = maestro.Controller()
     while not rospy.is_shutdown():
         left_dist = pololu.getPosition(CHANNEL_L_IR)
