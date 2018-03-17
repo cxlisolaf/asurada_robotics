@@ -14,7 +14,7 @@ def callback():
 def publisher(pid):
     pub = rospy.Publisher('pololu', Float64, queue_size=10)
     rospy.init_node('pololu_pub', anonymous=True)
-    rate = rospy.Rate(10)
+    rate = rospy.Rate(50)
     pololu = maestro.Controller()
     while not rospy.is_shutdown():
         pub.publish(pwn)
