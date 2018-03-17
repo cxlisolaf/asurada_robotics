@@ -1,2 +1,0 @@
-
--DCATKIN_DEVEL_PREFIX=/home/odroid/Dev/asurada/devel -DCMAKE_INSTALL_PREFIX=/home/odroid/Dev/asurada/install -G Unix Makefiles
