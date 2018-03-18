@@ -8,19 +8,9 @@ from std_msgs.msg import Float64
 def callback():
     rospy.loginfo("I heard PID")
     pwn = data.data
-    publisher(pid)
-
-
-def publisher(pid):
-    pub = rospy.Publisher('pololu', Float64, queue_size=10)
-    rospy.init_node('pololu_pub', anonymous=True)
-    rate = rospy.Rate(50)
     pololu = maestro.Controller()
-    while not rospy.is_shutdown():
-        pub.publish(pwn)
-        rate.sleep()
+    pololu.setTarget(0, 6000-pwn)
 
-                  
 def subscriber():
     rospy.init_node('pololu_sub', anonymous=True)
 
@@ -32,6 +22,11 @@ def subscriber():
 
 if __name__ == '__main__':
     try:
+        pololu = maestro.Controller()
+        pololu.setSpeed(1, 2000)
+        pololu.setTarget(1, 6600)
+        print 'motor'
         subscriber()
+
     except rospy.ROSInterruptExecution:
         pass
