@@ -13,9 +13,12 @@ def publisher():
     pololu = maestro.Controller()
     while not rospy.is_shutdown():
         left_dist = pololu.getPosition(CHANNEL_L_IR)
+        print 'left: ' + str(left_dist)
         right_dist = pololu.getPosition(CHANNEL_R_IR)
+        print 'right: ' + str(right_dist)
         diff = left_dist - right_dist
         pub.publish(diff)
+        print diff
         rate.sleep()
 
 if __name__ == '__main__':
