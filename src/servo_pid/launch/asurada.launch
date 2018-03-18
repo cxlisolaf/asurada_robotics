@@ -1,5 +1,5 @@
 <launch>
-<group ns=position_control>
+<group ns="position_control">
     <node name="PID" pkg="pid" type="controller" output="screen" >
       <param name="node_name" value="steering_pid" />
       <param name="Kp" value="10.0" />
