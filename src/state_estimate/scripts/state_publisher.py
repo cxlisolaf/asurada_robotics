@@ -4,7 +4,7 @@ import rospy
 from std_msgs.msg import Float64
 
 CHANNEL_L_IR = 6
-CHANNEL_R_IR = 8
+CHANNEL_R_IR = 11
 
 def publisher():
     pub = rospy.Publisher('state', Float64, queue_size=10)
