@@ -2,9 +2,9 @@
 <group ns="position_control">
     <node name="PID" pkg="pid" type="controller" output="screen" >
       <param name="node_name" value="steering_pid" />
-      <param name="Kp" value="20.0" />
+      <param name="Kp" value="5.0" />
       <param name="Ki" value="0.0" />
-      <param name="Kd" value="15.0" />
+      <param name="Kd" value="0.0" />
       <param name="upper_limit" value="1500" />
       <param name="lower_limit" value="-1500" />
       <param name="windup_limit" value="100" />
