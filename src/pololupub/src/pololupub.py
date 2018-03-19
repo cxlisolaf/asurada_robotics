@@ -10,7 +10,7 @@ def callback(data):
     pwm = int(data.data)
     pololu = maestro.Controller()
     pololu.setAccel(0, 10)
-    pololu.setTarget(0, 6000-pwm)
+    pololu.setTarget(0, 6000+pwm)
 
 def subscriber():
     rospy.init_node('pololu_sub', anonymous=True)
@@ -23,9 +23,9 @@ def subscriber():
 
 if __name__ == '__main__':
     try:
-        pololu = maestro.Controller()
-        pololu.setSpeed(1, 2000)
-        pololu.setTarget(1, 5000)
+        # pololu = maestro.Controller()
+        # pololu.setSpeed(1, 2000)
+        # pololu.setTarget(1, 5000)
         subscriber()
 
     except rospy.ROSInterruptException:
