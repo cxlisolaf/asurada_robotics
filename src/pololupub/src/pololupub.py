@@ -4,13 +4,14 @@ import maestro
 import rospy
 from std_msgs.msg import Float64
 
+SERVO_CENTER = 6300
 
 def callback(data):
     rospy.loginfo("I heard PID: " + str(data.data))
     pwm = int(data.data)
     pololu = maestro.Controller()
-    pololu.setAccel(0, 10)
-    pololu.setTarget(0, 6000+pwm)
+    # pololu.setAccel(0, 10)
+    pololu.setTarget(0, SERVO_CENTER + pwm)
 
 def subscriber():
     rospy.init_node('pololu_sub', anonymous=True)
