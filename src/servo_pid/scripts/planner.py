@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import rospy
+import smach
+import smach_ros
 from std_msgs.msg import Float64
 
 
@@ -10,6 +12,21 @@ rospy.init_node('setpoint_pub', anonymous=True)
 
 setpoint = Float64()
 setpoint.data = float(0)
+
+class Straight(smach.State):
+    def __init__(self):
+        smach.State.__init__(self, outcomes=['outcome1'])
+
+    def execute(self, userdata):
+        rospy.loginfo('Straight')
+
+class Corner(smach.State):
+    def __init__(self):
+        smach.State.__init__(self, outcomes=['outcome1'])
+
+    def execute(self, userdata):
+        rospy.loginfo('Corner')
+        re
 
 
 def set_message():
