@@ -7,6 +7,7 @@ from transform import transform
 CHANNEL_L_IR = 6
 CHANNEL_R_IR = 11
 WINDOW_SIZE = 10
+LEFT_LIMIT = 250
 
 def publisher():
     pub = rospy.Publisher('state', Float64, queue_size=10)
@@ -24,6 +25,8 @@ def publisher():
         dist_right = transform(ir_right)
         # print 'ir right: ' + str(ir_right)
         # print 'dist right: ' + str(dist_right)
+        if dist_left > LEFT_LIMIT:
+            dist_left = LEFT_LIMIT
         diff = dist_left - dist_right
         window[index] = diff
         index += 1
