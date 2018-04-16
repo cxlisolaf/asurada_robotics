@@ -10,19 +10,22 @@ from std_msgs.msg import Float64
 setpoint_pub = rospy.Publisher('setpoint', Float64, queue_size=10)
 rospy.init_node('setpoint_pub', anonymous=True)
 
+
+#Move set point message into Straight Class
 setpoint = Float64()
 setpoint.data = float(0)
 
 class Straight(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['outcome1'])
+        smach.State.__init__(self, outcomes=['Corner', 'Stop'])
+
 
     def execute(self, userdata):
         rospy.loginfo('Straight')
 
 class Corner(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['outcome1'])
+        smach.State.__init__(self, outcomes=['Straight'])
 
     def execute(self, userdata):
         rospy.loginfo('Corner')
