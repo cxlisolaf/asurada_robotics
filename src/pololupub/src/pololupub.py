@@ -16,11 +16,11 @@ def callback(data):
 def subscriber():
     rospy.init_node('pololu_sub', anonymous=True)
 
-    rospy.Subscriber("control_effort", Float64, callback)
-                                                                         
+    rospy.Subscriber("control_input", Float64, callback)
+
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
-                                                                                             
+
 
 if __name__ == '__main__':
     try:

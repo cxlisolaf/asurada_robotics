@@ -1,7 +1,7 @@
 <launch>
 
-<group ns="position_control">
-    <node name="PID" pkg="pid" type="controller" output="screen" >
+<group ns="PID_Corner">
+    <node name="PID_Corner" pkg="pid" type="controller" output="screen" >
       <param name="node_name" value="steering_pid" />
       <param name="Kp" value="25.0" />
       <param name="Ki" value="0.0" />
@@ -11,17 +11,35 @@
       <param name="windup_limit" value="100" />
       <param name="max_loop_frequency" value="50.0" />
       <param name="min_loop_frequency" value="50.0" />
+      <remap from="control_effort" to="/ce_corner"/>
      </node>
-
-    <node name="Planner" pkg="servo_pid" type="planner.py" output="screen" >
-    </node>
-
-    <node name="State_Estimate" pkg="state_estimate" type="state_publisher.py" output="screen">
-    </node>
-
-    <node name="Control_Effort" pkg="pololupub" type="pololupub.py" output="screen">
-    </node>
-
 </group>
+
+<group ns="PID_Straight">
+    <node name="PID_Straight" pkg="pid" type="controller" output="screen" >
+      <param name="node_name" value="steering_pid" />
+      <param name="Kp" value="5.0" />
+      <param name="Ki" value="0.0" />
+      <param name="Kd" value="1.0" />
+      <param name="upper_limit" value="1200" />
+      <param name="lower_limit" value="-1200" />
+      <param name="windup_limit" value="100" />
+      <param name="max_loop_frequency" value="50.0" />
+      <param name="min_loop_frequency" value="50.0" />
+      <remap from="control_effort" to="/ce_straight"/>
+     </node>
+</group>
+
+<node name="State_Machine" pkg="servo_pid" type="state_machine.py" output="screen" >
+</node>
+
+<node name="Planner" pkg="servo_pid" type="planner.py" output="screen" >
+</node>
+
+<node name="State_Estimate" pkg="state_estimate" type="state_publisher.py" output="screen">
+</node>
+
+<node name="Pololu_Publisher" pkg="pololupub" type="pololupub.py" output="screen">
+</node>
 
 </launch>
