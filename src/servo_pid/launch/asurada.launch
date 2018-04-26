@@ -11,7 +11,9 @@
       <param name="windup_limit" value="100" />
       <param name="max_loop_frequency" value="50.0" />
       <param name="min_loop_frequency" value="50.0" />
-      <remap from="control_effort" to="/ce_corner"/>
+      <remap from="/PID_Corner/control_effort" to="/ce_corner"/>
+      <remap from="/PID_Corner/setpoint" to="/setpoint" />
+      <rempa from="/PID_Corner/state" to="/state" />
      </node>
 </group>
 
@@ -26,7 +28,9 @@
       <param name="windup_limit" value="100" />
       <param name="max_loop_frequency" value="50.0" />
       <param name="min_loop_frequency" value="50.0" />
-      <remap from="control_effort" to="/ce_straight"/>
+      <remap from="/PID_Straight/control_effort" to="/ce_straight"/>
+      <remap from="/PID_Straight/setpoint" to="/setpoint" />
+      <rempa from="/PID_Straight/state" to="/state" />
      </node>
 </group>
 
