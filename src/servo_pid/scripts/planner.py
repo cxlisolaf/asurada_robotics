@@ -10,7 +10,7 @@ from std_msgs.msg import Float64
 
 
 # setpoint publisher object plublish to "/setpoint" topic
-setpoint_pub = rospy.Publisher('/setpoint', Float64, queue_size=10)
+setpoint_pub = rospy.Publisher('setpoint', Float64, queue_size=10)
 rospy.init_node('setpoint_pub', anonymous=True)
 
 #Setpoint message in Float64 format

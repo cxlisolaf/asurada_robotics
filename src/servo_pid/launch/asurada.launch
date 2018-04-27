@@ -35,15 +35,21 @@
 </group>
 
 <node name="State_Machine" pkg="servo_pid" type="state_machine.py" output="screen" >
+  <remap from="state" to="/state" />
+  <remap from="ce_corner" to="/ce_corner" />
+  <remap from="ce_straight" to="/ce_straight" />
 </node>
 
 <node name="Setpoint" pkg="servo_pid" type="planner.py" output="screen" >
+  <remap from="setpoint" to="/setpoint" />
 </node>
 
 <node name="State_Estimate" pkg="state_estimate" type="state_publisher.py" output="screen">
+  <remap from="state" to="/state" />
 </node>
 
 <node name="Pololu_Publisher" pkg="pololupub" type="pololupub.py" output="screen">
+  <rempa from="control_input" to="/control_input" />
 </node>
 
 </launch>
