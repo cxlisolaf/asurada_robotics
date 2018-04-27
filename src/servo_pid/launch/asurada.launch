@@ -50,7 +50,7 @@
 </node>
 
 <node name="Pololu_Publisher" pkg="pololupub" type="pololupub.py" output="screen">
-  <rempa from="control_input" to="/control_input" />
+  <remap from="control_input" to="/control_input" />
 </node>
 
 </launch>
