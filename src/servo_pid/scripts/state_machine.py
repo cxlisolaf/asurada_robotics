@@ -6,7 +6,7 @@ import smach_ros
 from std_msgs.msg import Float64
 
 rospy.init_node('state_machine', anonymous=True)
-
+global control_pub
 global rate
 rate = rospy.Rate(50) #in Hz
 
@@ -33,14 +33,24 @@ class Straight(smach.State):
 
     def execute(self, userdata):
         #rospy.loginfo('Straight')
-        if userdata.ir_in > 200:
-            return 'corner'
-        else:
+        while userdata.ir_in < 200:
             rospy.Subscriber('ce_straight', Float64, cb_straight)
             rospy.Subscriber('state', Float64, callback)
             control_pub.publish(userdata.ce_straight)
             rate.sleep()
             print('FULL SPEED AHEAD!')
+        else:
+            return 'corner'
+
+#        if userdata.ir_in > 200:
+#            return 'corner'
+#        else:
+#            rospy.Subscriber('ce_straight', Float64, cb_straight)
+#            rospy.Subscriber('state', Float64, callback)
+#            control_pub.publish(userdata.ce_straight)
+#            rate.sleep()
+#            print('FULL SPEED AHEAD!')
+#            return 'straight'
 
 
 #Going around a corner state
@@ -55,7 +65,7 @@ class Corner(smach.State):
 
     def execute(self, userdata):
         #rospy.loginfo('Corner')
-        if 75 < userdata.ir_in:
+        while userdata.ir_in > 75:
             rospy.Subscriber('ce_corner', Float64, cb_corner)
             rospy.Subscriber('state', Float64, callback)
             control_pub.publish(userdata.ce_corner)
@@ -64,21 +74,35 @@ class Corner(smach.State):
         else:
             return 'straight'
 
+
+#        if 75 < userdata.ir_in:
+#            rospy.Subscriber('ce_corner', Float64, cb_corner)
+#            rospy.Subscriber('state', Float64, callback)
+#            control_pub.publish(userdata.ce_corner)
+#            rate.sleep()
+#            print('CORNERING!')
+#            return 'corner'
+#        else:
+#            return 'straight'
+
 def callback(data):
     userdata.ir_in = data.data
+    rospy.loginfo('Got ir_in callback')
     return userdata
 
 def cb_straight(data):
+    rospy.loginfo('Got ce_straight callback')
     userdata.ce_straight = data.data
     return  userdata
 
 def cb_corner(data):
+    rospy.loginfo('Got ce_corner callback')
     userdata.ce_corner = data.data
     return userdata
 
 def main():
     #Create State SMACH state machine
-    sm = smach.StateMachine(outcomes=['base'])
+    sm = smach.StateMachine(outcomes=['BASE'])
     sm.userdata.ir_in = 0 #initialize userdata object with attribute ir_in at 0
     sm.userdata.ce_corner = 0
     sm.userdata.ce_straight = 0
