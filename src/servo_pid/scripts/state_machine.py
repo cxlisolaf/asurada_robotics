@@ -66,20 +66,20 @@ class Corner(smach.State):
         #rospy.loginfo('Corner')
         while userdata.ir_in > 75:
             rospy.Subscriber('ce_corner', Float64, self.cb_corner)
-    #        rospy.Subscriber('state', Float64, callback)
+            rospy.Subscriber('state', Float64, self.callback)
             control_pub.publish(userdata.ce_corner)
             rate.sleep()
 #            print('CORNERING!')
         else:
             return 'straight'
 
-#    def callback(data):
-#        userdata.ir_in = data.data
-#        rospy.loginfo('Got ir_in callback')
+    def callback(self, data):
+        sm.userdata.ir_in = data.data
+        rospy.loginfo('Got ir_in callback')
 
-    def cb_corner(data):
+    def cb_corner(self, data):
         rospy.loginfo('Got ce_corner callback')
-        userdata.ce_corner = data.data
+        sm.userdata.ce_corner = data.data
 
 #        if 75 < userdata.ir_in:
 #            rospy.Subscriber('ce_corner', Float64, cb_corner)
