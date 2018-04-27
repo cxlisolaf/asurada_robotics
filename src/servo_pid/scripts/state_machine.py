@@ -32,14 +32,14 @@ class Straight(smach.State):
             rospy.Subscriber('state', Float64, self.callback)
             control_pub.publish(userdata.ce_straight)
             rate.sleep()
-#            print('FULL SPEED AHEAD!')
-            print sm.userdata.ce_straight
+            rospy.loginfo('FULL SPEED AHEAD!')
+#            print(userdata.ce_straight)
         else:
             return 'corner'
 
     def callback(self, data):
         sm.userdata.ir_in = data.data
- #       rospy.loginfo('Got ir_in callback')
+#        rospy.loginfo('Got ir_in callback')
 
     def cb_straight(self, data):
   #      rospy.loginfo('Got ce_straight callback')
@@ -70,16 +70,16 @@ class Corner(smach.State):
             rospy.Subscriber('state', Float64, self.callback)
             control_pub.publish(userdata.ce_corner)
             rate.sleep()
-#            print('CORNERING!')
+            rospy.loginfo('CORNERING!')
         else:
             return 'straight'
 
     def callback(self, data):
         sm.userdata.ir_in = data.data
-        rospy.loginfo('Got ir_in callback')
+ #       rospy.loginfo('Got ir_in callback')
 
     def cb_corner(self, data):
-        rospy.loginfo('Got ce_corner callback')
+ #       rospy.loginfo('Got ce_corner callback')
         sm.userdata.ce_corner = data.data
 
 #        if 75 < userdata.ir_in:
@@ -99,7 +99,7 @@ def main():
     sm.userdata.ir_in = 0 #initialize userdata object with attribute ir_in at 0
     sm.userdata.ce_corner = 0
     sm.userdata.ce_straight = 0
-    global userdata
+    global sm
 
     #Open the State container here
     with sm:
