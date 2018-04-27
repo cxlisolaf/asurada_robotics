@@ -5,7 +5,8 @@ import smach
 import smach_ros
 from std_msgs.msg import Float64
 
-#global rate = rospy.rate(50)
+global rate
+rate = rospy.Rate(50) #in Hz
 
 
 # setpoint publisher object plublish to "/setpoint" topic
@@ -19,7 +20,7 @@ setpoint.data = float(0)
 def set_message():
     while not rospy.is_shutdown():
         setpoint_pub.publish(setpoint)
-        rospy.sleep(0.02)
+        rate.sleep()
 
 
 if __name__ == '__main__':

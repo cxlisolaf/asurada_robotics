@@ -7,7 +7,10 @@ from std_msgs.msg import Float64
 
 rospy.init_node('state_machine', anonymous=True)
 
-global rate = rospy.rate(50)
+global rate
+rate = rospy.Rate(50) #in Hz
+
+
 
 # create publisher object and map to "control_pub" variable. Publish to "/control_input"
 # topic which the pololupub.py subscribes to.
@@ -31,9 +34,9 @@ class Straight(smach.State):
         #rospy.loginfo('Straight')
         if self.ir_in > 200:
             return 'corner'
-        else
+        else:
             control_pub.publish(ce_straight)
-            rospy.sleep(rate)
+            rate.sleep()
             print('FULL SPEED AHEAD!')
 
 #Going around a corner state
@@ -49,9 +52,9 @@ class Corner(smach.State):
         #rospy.loginfo('Corner')
         if 75 < ir_in:
             control_pub.publish(ce_corner)
-            rospy.sleep(rate)
+            rate.sleep()
             print('CORNERING!')
-        else
+        else:
             return 'straight'
 
 def main():
