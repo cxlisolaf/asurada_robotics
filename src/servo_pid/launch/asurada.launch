@@ -38,7 +38,7 @@
   <remap from="state" to="/state" />
   <remap from="ce_corner" to="/ce_corner" />
   <remap from="ce_straight" to="/ce_straight" />
-  <remap from="control_input" to="/control_input"
+  <remap from="control_input" to="/control_input" />
 </node>
 
 <node name="Setpoint" pkg="servo_pid" type="planner.py" output="screen" >
