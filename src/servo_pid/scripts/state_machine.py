@@ -37,12 +37,12 @@ class Straight(smach.State):
             return 'corner'
 
     def callback(self, data):
-        userdata.ir_in = data.data
-        rospy.loginfo('Got ir_in callback')
+        sm.userdata.ir_in = data.data
+ #       rospy.loginfo('Got ir_in callback')
 
     def cb_straight(self, data):
-        rospy.loginfo('Got ce_straight callback')
-        userdata.ce_straight = data.data
+  #      rospy.loginfo('Got ce_straight callback')
+        sm.userdata.ce_straight = data.data
 
 #        if userdata.ir_in > 200:
 #            return 'corner'
@@ -98,6 +98,7 @@ def main():
     sm.userdata.ir_in = 0 #initialize userdata object with attribute ir_in at 0
     sm.userdata.ce_corner = 0
     sm.userdata.ce_straight = 0
+    global sm.userdata
 
     #Open the State container here
     with sm:
