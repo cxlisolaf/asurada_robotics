@@ -37,7 +37,7 @@
 <node name="State_Machine" pkg="servo_pid" type="state_machine.py" output="screen" >
 </node>
 
-<node name="Planner" pkg="servo_pid" type="planner.py" output="screen" >
+<node name="Setpoint" pkg="servo_pid" type="planner.py" output="screen" >
 </node>
 
 <node name="State_Estimate" pkg="state_estimate" type="state_publisher.py" output="screen">
