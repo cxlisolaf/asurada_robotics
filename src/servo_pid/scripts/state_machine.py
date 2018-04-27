@@ -10,8 +10,6 @@ global control_pub
 global rate
 rate = rospy.Rate(50) #in Hz
 
-
-
 # create publisher object and map to "control_pub" variable. Publish to "/control_input"
 # topic which the pololupub.py subscribes to.
 control_pub = rospy.Publisher('control_input', Float64, queue_size=10)
@@ -20,7 +18,6 @@ control_pub = rospy.Publisher('control_input', Float64, queue_size=10)
 # Negative value = Left of Center
 # Positive value = Right of Center
 
-
 #Going State State
 class Straight(smach.State):
     def __init__(self):
@@ -28,19 +25,24 @@ class Straight(smach.State):
                                 outcomes=['corner'],
                                 input_keys=['ir_in', 'ce_straight'])
 
-        rospy.Subscriber('state', Float64, callback)
-        #Pull state information from state_publisher, in form of distance from center in cm
-
     def execute(self, userdata):
         #rospy.loginfo('Straight')
         while userdata.ir_in < 200:
-            rospy.Subscriber('ce_straight', Float64, cb_straight)
-            rospy.Subscriber('state', Float64, callback)
+            rospy.Subscriber('ce_straight', Float64, self.cb_straight)
+            rospy.Subscriber('state', Float64, self.callback)
             control_pub.publish(userdata.ce_straight)
             rate.sleep()
-            print('FULL SPEED AHEAD!')
+#            print('FULL SPEED AHEAD!')
         else:
             return 'corner'
+
+    def callback(data):
+        userdata.ir_in = data.data
+        rospy.loginfo('Got ir_in callback')
+
+    def cb_straight(data):
+        rospy.loginfo('Got ce_straight callback')
+        userdata.ce_straight = data.data
 
 #        if userdata.ir_in > 200:
 #            return 'corner'
@@ -60,20 +62,24 @@ class Corner(smach.State):
                                 outcomes=['straight'],
                                 input_keys=['ir_in', 'ce_corner'])
 
-        #Pyll state information form state_publisher, in form of distance from center in cm
-        rospy.Subscriber('ce_corner', Float64, cb_corner)
-
     def execute(self, userdata):
         #rospy.loginfo('Corner')
         while userdata.ir_in > 75:
-            rospy.Subscriber('ce_corner', Float64, cb_corner)
-            rospy.Subscriber('state', Float64, callback)
+            rospy.Subscriber('ce_corner', Float64, self.cb_corner)
+            rospy.Subscriber('state', Float64, self.callback)
             control_pub.publish(userdata.ce_corner)
             rate.sleep()
-            print('CORNERING!')
+#            print('CORNERING!')
         else:
             return 'straight'
 
+    def callback(data):
+        userdata.ir_in = data.data
+        rospy.loginfo('Got ir_in callback')
+
+    def cb_corner(data):
+        rospy.loginfo('Got ce_corner callback')
+        userdata.ce_corner = data.data
 
 #        if 75 < userdata.ir_in:
 #            rospy.Subscriber('ce_corner', Float64, cb_corner)
@@ -85,20 +91,6 @@ class Corner(smach.State):
 #        else:
 #            return 'straight'
 
-def callback(data):
-    userdata.ir_in = data.data
-    rospy.loginfo('Got ir_in callback')
-    return userdata
-
-def cb_straight(data):
-    rospy.loginfo('Got ce_straight callback')
-    userdata.ce_straight = data.data
-    return  userdata
-
-def cb_corner(data):
-    rospy.loginfo('Got ce_corner callback')
-    userdata.ce_corner = data.data
-    return userdata
 
 def main():
     #Create State SMACH state machine
