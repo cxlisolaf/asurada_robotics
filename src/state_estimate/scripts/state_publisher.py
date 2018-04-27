@@ -10,7 +10,7 @@ WINDOW_SIZE = 10
 LEFT_LIMIT = 250
 
 def publisher():
-    pub = rospy.Publisher('state', Float64, queue_size=10)
+    pub = rospy.Publisher('/state', Float64, queue_size=10)
     rospy.init_node('state_estimate', anonymous=True)
     rate = rospy.Rate(50)
     pololu = maestro.Controller()
