@@ -33,6 +33,7 @@ class Straight(smach.State):
             control_pub.publish(userdata.ce_straight)
             rate.sleep()
 #            print('FULL SPEED AHEAD!')
+            print sm.userdata.ce_straight
         else:
             return 'corner'
 
@@ -98,7 +99,7 @@ def main():
     sm.userdata.ir_in = 0 #initialize userdata object with attribute ir_in at 0
     sm.userdata.ce_corner = 0
     sm.userdata.ce_straight = 0
-    global sm.userdata
+    global userdata
 
     #Open the State container here
     with sm:
