@@ -32,7 +32,8 @@ class Straight(smach.State):
             rospy.Subscriber('state', Float64, self.callback)
             control_pub.publish(userdata.ce_straight)
             rate.sleep()
-            rospy.loginfo('FULL SPEED AHEAD!')
+            rospy.loginfo(userdata.ir_in)
+#            rospy.loginfo('FULL SPEED AHEAD!')
 #            print(userdata.ce_straight)
         else:
             return 'corner'
