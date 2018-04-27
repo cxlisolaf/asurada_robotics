@@ -36,11 +36,11 @@ class Straight(smach.State):
         else:
             return 'corner'
 
-    def callback(data):
+    def callback(self, data):
         userdata.ir_in = data.data
         rospy.loginfo('Got ir_in callback')
 
-    def cb_straight(data):
+    def cb_straight(self, data):
         rospy.loginfo('Got ce_straight callback')
         userdata.ce_straight = data.data
 
