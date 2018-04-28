@@ -28,7 +28,7 @@ class Straight(smach.State):
     def execute(self, userdata):
         #rospy.loginfo('Straight')
         rospy.Subscriber('state', Float64, self.callback)
-        if userdata.ir_in < -200:
+        if userdata.ir_in < -150:
             return 'corner'
 #            rospy.loginfo('FULL SPEED AHEAD!')
 #            print(userdata.ce_straight)
@@ -36,7 +36,7 @@ class Straight(smach.State):
             rospy.Subscriber('ce_straight', Float64, self.cb_straight)
             control_pub.publish(userdata.ce_straight)
             rate.sleep()
-            rospy.loginfo(userdata.ir_in)
+            print(userdata.ir_in)
             return 'straight'
 
     def callback(self, data):
@@ -68,7 +68,7 @@ class Corner(smach.State):
     def execute(self, userdata):
         #rospy.loginfo('Corner')
         rospy.Subscriber('state', Float64, self.callback)
-        if userdata.ir_in < -75:
+        if userdata.ir_in < -50:
             rospy.Subscriber('ce_corner', Float64, self.cb_corner)
             control_pub.publish(userdata.ce_corner)
             rate.sleep()
