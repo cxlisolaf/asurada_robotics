@@ -22,13 +22,13 @@ control_pub = rospy.Publisher('control_input', Float64, queue_size=10)
 class Straight(smach.State):
     def __init__(self):
         smach.State.__init__(self,
-                                outcomes=['corner'],
+                                outcomes=['corner','straight'],
                                 input_keys=['ir_in', 'ce_straight'])
 
     def execute(self, userdata):
         #rospy.loginfo('Straight')
         rospy.Subscriber('state', Float64, self.callback)
-        if userdata.ir_in < 200:
+        if userdata.ir_in < -200:
             return 'corner'
 #            rospy.loginfo('FULL SPEED AHEAD!')
 #            print(userdata.ce_straight)
@@ -62,13 +62,13 @@ class Straight(smach.State):
 class Corner(smach.State):
     def __init__(self):
         smach.State.__init__(self,
-                                outcomes=['straight'],
+                                outcomes=['straight','corner'],
                                 input_keys=['ir_in', 'ce_corner'])
 
     def execute(self, userdata):
         #rospy.loginfo('Corner')
         rospy.Subscriber('state', Float64, self.callback)
-        if userdata.ir_in > 75:
+        if userdata.ir_in < -75:
             rospy.Subscriber('ce_corner', Float64, self.cb_corner)
             control_pub.publish(userdata.ce_corner)
             rate.sleep()
@@ -108,9 +108,11 @@ def main():
     with sm:
         #Add States with transitions
         smach.StateMachine.add('STRAIGHT', Straight(),
-                                transitions={'corner':'CORNER'})
+                                transitions={'corner':'CORNER',
+                                            'straight':'STRAIGHT'})
         smach.StateMachine.add('CORNER', Corner(),
-                                transitions={'straight':'STRAIGHT'})
+                                transitions={'straight':'STRAIGHT', 
+                                            'corner':'CORNER'})
 
     outcome = sm.execute()
 
