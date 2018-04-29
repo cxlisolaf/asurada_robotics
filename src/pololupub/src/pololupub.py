@@ -4,7 +4,9 @@ import maestro
 import rospy
 from std_msgs.msg import Float64
 
-SERVO_CENTER = 6300
+#previously with old servo servo_center = 6300
+#new servo servo_center =6000
+SERVO_CENTER = 6000
 
 def callback(data):
     rospy.loginfo("I heard PID: " + str(data.data))
