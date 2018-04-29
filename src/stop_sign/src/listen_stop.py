@@ -2,8 +2,6 @@
 
 import rospy
 from sensor_msgs.msg import Image
-import cv2
-from cv_bridge import CvBridge
 import maestro
 
 def listener():
@@ -22,8 +20,6 @@ def callback(data):
     except CvBridgeError as e:
         print e
 
-    cv2.imshow("1", cv_image)
-    cv2.waitKey(1)
 
 if __name__ == '__main__':
 
