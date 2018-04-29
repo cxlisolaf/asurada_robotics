@@ -18,6 +18,10 @@ from cv_bridge import CvBridge, CvBridgeError
 import os
 import numpy as np
 
+img_width, img_height = 150, 150
+    
+input_shape = (3, img_width, img_height)
+
 model = Sequential()
 model.add(Conv2D(32, (3, 3), input_shape=input_shape))
 model.add(Activation('relu'))
@@ -44,13 +48,6 @@ model.load_weights('first_try.h5')
 
 def detect(image):
    	
-    img_width, img_height = 150, 150
-    
-    if K.image_data_format() == 'channels_first':
-	 input_shape = (3, img_width, img_height)
-    else:
-	 input_shape = (img_width, img_height, 3)
-
     img = load_img(image,False,target_size=(img_width,img_height))
     x = img_to_array(img)
     x = np.expand_dims(x, axis=0)
