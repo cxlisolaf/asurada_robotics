@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import roslib
+#import roslib
 
 from keras.models import load_model
 from keras.preprocessing.image import img_to_array, load_img
