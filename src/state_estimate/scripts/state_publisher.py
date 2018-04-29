@@ -19,11 +19,11 @@ def publisher():
     while not rospy.is_shutdown():
         ir_left = pololu.getPosition(CHANNEL_L_IR)
         dist_left = transform(ir_left)
-        # print 'ir left: ' + str(ir_left)
+#        print 'ir left: ' + str(ir_left)
         # print 'dist left: ' + str(dist_left)
         ir_right = pololu.getPosition(CHANNEL_R_IR)
         dist_right = transform(ir_right)
-        # print 'ir right: ' + str(ir_right)
+#        print 'ir right: ' + str(ir_right)
         # print 'dist right: ' + str(dist_right)
         if dist_left > LEFT_LIMIT:
             dist_left = LEFT_LIMIT
@@ -37,6 +37,11 @@ def publisher():
         # print 'dist diff: ' + str(diff)
         # print 'average: ' + str(average)
         rate.sleep()
+
+def myhook():
+    print "shutdown time!"
+
+rospy.on_shutdown(myhook)
 
 if __name__ == '__main__':
     try:
