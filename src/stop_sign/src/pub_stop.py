@@ -20,28 +20,31 @@ import numpy as np
 
 img_width, img_height = 150, 150
     
-input_shape = (3, img_width, img_height)
+input_shape = (img_width, img_height,3)
 
 model = Sequential()
 model.add(Conv2D(32, (3, 3), input_shape=input_shape))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-
+print(1)
 model.add(Conv2D(32, (3, 3)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-
+print(2)
 model.add(Conv2D(64, (3, 3)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-
+print(3)
 model.add(Flatten())
 model.add(Dense(64))
 model.add(Activation('relu'))
 model.add(Dropout(0.5))
 model.add(Dense(1))
 model.add(Activation('sigmoid'))
-
+print(4)
+model.compile(loss='binary_crossentropy',
+              optimizer='rmsprop',
+              metrics=['accuracy'])
 
 model.load_weights('first_try.h5')
 
@@ -53,16 +56,20 @@ def detect(image):
     x = np.expand_dims(x, axis=0)
     preds = model.predict_classes(x)
     prob = model.predict_proba(x)
-    print(preds, prob)
+    print preds[0][0]
 
-    return pred,prob
+    return preds,prob
 
 def listener():
 
     rospy.init_node('image_classify',anonymous = True)
-    rospy.init_node('control', anonymous=True)
-
+    #rospy.init_node('control', anonymous=True)
     rospy.Subscriber("/camera/image_raw", Image, callback)
+    while not rospy.is_shutdown():
+        pub = rospy.Publisher('/seestop', Bool, queue_size=10)
+        pred, prob = detect("frame.jpg")
+        pub.publish(bool(pred[0][0]))
+
     rospy.spin()
 
 
@@ -72,11 +79,13 @@ def callback(data):
         
         print("I heard")
         cv_image = CvBridge().imgmsg_to_cv2(data, "bgr8")
-	pred, prob = detect(cv_image)
+	cv2.imwrite("frame.jpg",cv_image)
+        pred, prob = detect("frame.jpg")
          
-	rate = rospy.Rate(10) # 10hz
+	rate = rospy.Rate(1) # 10hz
 	pub = rospy.Publisher('seestop', Bool, queue_size=10)
-        pub.publish(pred)
+        print pred
+        pub.publish(pred[0][0])
 
 	rate.sleep()
 
