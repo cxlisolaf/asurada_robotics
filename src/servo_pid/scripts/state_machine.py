@@ -13,21 +13,21 @@ ce_corner = 0
 
 
 def callback(data):
-    print data.data
-    if data.data < -200:
+#    print data.data
+    if data.data < -180:
         control_pub.publish(ce_corner)
-        print 'corner!'
+        rospy.loginfo('CORNER!')
     else:
         control_pub.publish(ce_straight)
-        print 'FULL SPEED AHEAD!'
+        rospy.loginfo('FULL SPEED AHEAD!')
 
 def cb_straight(data):
-    print data.data
+#    print data.data
     global ce_straight
     ce_straight = data.data
 
 def cb_corner(data):
-    print data.data
+#    print data.data
     global ce_corner
     ce_corner = data.data
 
@@ -42,8 +42,6 @@ def main():
     rospy.Subscriber('ce_straight', Float64, cb_straight)
     rospy.Subscriber('ce_corner', Float64, cb_corner)
     rospy.Subscriber('state', Float64, callback)
-    print ce_corner, ce_straight
-    # rate.sleep()
     rospy.spin()
 
 if __name__ == '__main__':
