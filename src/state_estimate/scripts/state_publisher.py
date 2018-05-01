@@ -16,12 +16,30 @@ def publisher():
     pololu = maestro.Controller()
     window = [0] * WINDOW_SIZE
     index = 0
+    left_prev = 300
+    right_prev = 300
     while not rospy.is_shutdown():
+#get left ir_sensor value
         ir_left = pololu.getPosition(CHANNEL_L_IR)
+        left_p = left_prev - ir_left
+
+        if 80 < left_p < 110:
+            ir_left = left_prev
+
+        left_prev = ir_left
         dist_left = transform(ir_left)
+
         print 'ir left: ' + str(ir_left)
         # print 'dist left: ' + str(dist_left)
+
+#get right ir sensor value
         ir_right = pololu.getPosition(CHANNEL_R_IR)
+        right_p = right_prev - ir_right
+
+        if 80 < right_p < 110:
+            ir_right = right_prev
+
+        right_prev = ir_right
         dist_right = transform(ir_right)
         print 'ir right: ' + str(ir_right)
         # print 'dist right: ' + str(dist_right)
