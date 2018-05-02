@@ -23,7 +23,7 @@ def publisher():
         ir_left = pololu.getPosition(CHANNEL_L_IR)
         left_p = left_prev - ir_left
 
-        if 80 < left_p < 110:
+        if 80 < left_p < 120:
             ir_left = left_prev
 
         left_prev = ir_left
@@ -36,7 +36,7 @@ def publisher():
         ir_right = pololu.getPosition(CHANNEL_R_IR)
         right_p = right_prev - ir_right
 
-        if 80 < right_p < 110:
+        if 80 < right_p < 120:
             ir_right = right_prev
 
         right_prev = ir_right

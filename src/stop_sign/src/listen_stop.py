@@ -15,10 +15,11 @@ def callback(data):
     try:
         print(data.data)
 	if data.data == True:
-	   print data.data
-	   maestro.Controller().setTarget(1,6300)
+	    print data.data
+	    maestro.Controller().setTarget(1,5000)
 	else:
-	   maestro.Controller().setTarget(1,2000)
+            print("hey")
+            maestro.Controller().setTarget(1,6300)
 		
     except CvBridgeError as e:
         print e
