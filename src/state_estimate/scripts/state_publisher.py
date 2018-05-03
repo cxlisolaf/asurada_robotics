@@ -15,6 +15,8 @@ LEFT_LIMIT_TURN = 400
 
 def publisher():
     pub = rospy.Publisher('state', Float64, queue_size=10)
+    right_pub = rospy.Publisher('dist_right', Float64, queue_size=10)
+    left_pub = rospy.Publisher('dist_left', Float64, queue_size=10)
     rospy.init_node('state_estimate', anonymous=True)
     rate = rospy.Rate(50)
     pololu = maestro.Controller()
@@ -48,7 +50,7 @@ def publisher():
 #        rospy.loginfo('ir right: ' + str(ir_right))
         # print 'dist right: ' + str(dist_right)
 #        if dist_left < 250 and dist_right < 250:
-#            pass 
+#            pass
         if dist_left < LEFT_LIMIT_TURN and dist_right > 200:
             pass
         elif dist_left > LEFT_LIMIT and dist_right < 250:
@@ -67,6 +69,8 @@ def publisher():
         index %= WINDOW_SIZE
         average = sum(window) / WINDOW_SIZE
         pub.publish(average)
+        right_pub.publish(dist_right)
+        left_pub.publish(dist_left)
         # print 'ir diff: ' + str(ir_left - ir_right)
         # print 'dist diff: ' + str(diff)
         # print 'average: ' + str(average)

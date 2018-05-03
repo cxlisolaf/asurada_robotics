@@ -14,7 +14,7 @@ ce_corner = 0
 
 def callback(data):
 
-    if data.data < -180:
+    if data.data < -180 and dist_left < 400:
         control_pub.publish(ce_straight)
         rospy.loginfo('CORNER!')
     else:
@@ -39,6 +39,14 @@ def cb_corner(data):
     global ce_corner
     ce_corner = data.data
 
+def cb_right(right):
+    global dist_right
+    dist_right = right.data
+
+def cb_left(left):
+    global dist_left
+    dist_left = left.data
+
 def main():
     #initialize state_machine node
     rospy.init_node('state_machine', anonymous=True)
@@ -49,6 +57,8 @@ def main():
     # rate = rospy.Rate(100)
     rospy.Subscriber('ce_straight', Float64, cb_straight)
     rospy.Subscriber('ce_corner', Float64, cb_corner)
+    rospy.SubcriberI('dist_right', Float64, cb_right)
+    rospy.Subcriber('dist_left', Float64, cb_left)
     rospy.Subscriber('state', Float64, callback)
     rospy.spin()
 
