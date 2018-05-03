@@ -99,7 +99,7 @@ def callback(data):
             if pred == 1:
                 maestro.Controller().setTarget(1,3000)
             else:
-                maestro.Controller().setTarget(1,7300)
+                maestro.Controller().setTarget(1,6500)
 	#rospy.sleep(5)
 
     except CvBridgeError as e:
