@@ -14,12 +14,12 @@ ce_corner = 0
 
 def callback(data):
 
-    if 200 > data.data > -200:
+    if data.data < -180:
+        control_pub.publish(ce_straight)
+        rospy.loginfo('CORNER!')
+    else:
         control_pub.publish(ce_straight)
         rospy.loginfo('FULL SPEED AHEAD!')
-    else
-        control_pub.publish(ce_corner)
-        rospy.loginfo('CORNER!')
 
 #    print data.data
 #    if data.data < -250:
