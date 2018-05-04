@@ -15,15 +15,17 @@ index = 0
 
 def callback(data):
     global index
+    global count 
+    count = 10
 
     if data.data < -180:
         control_pub.publish(ce_straight)
-        if index == 5:
+        if index == count:
             rospy.loginfo('CORNER!')
             index =0
     else:
         control_pub.publish(ce_straight)
-        if index == 5:
+        if index == count:
             rospy.loginfo('FULL SPEED AHEAD!')
             index = 0
 
