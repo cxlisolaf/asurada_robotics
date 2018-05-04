@@ -50,6 +50,10 @@ def publisher():
         # print 'dist right: ' + str(dist_right)
 #        if dist_left < 250 and dist_right < 250:
 #            pass
+        if counter == 5:
+            rospy.loginfo('LEFT' + str(dist_left))
+            rospy.loginfo('RIGHT' + str(dist_right))
+
         if dist_left < LEFT_LIMIT_TURN and dist_right > 200:
             pass
         elif dist_left > LEFT_LIMIT and dist_right < 250:
@@ -63,7 +67,7 @@ def publisher():
             if count == 5:
                 rospy.loginfo('DOOR IGNORE')
                 count = 0
-        
+
         count += 1
 #        elif dist_left > LEFT_LIMIT and dist_right > 250:
 #            rospy.loginfo('LEFT LIMIT')
