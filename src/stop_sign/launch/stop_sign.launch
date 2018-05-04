@@ -23,4 +23,7 @@
       <param name="timestamp_method" value="start"/> <!-- start of frame -->
     </node>
   </group>
+
+  <node name="image_classify" pkg="stop_sign" type="pub_stop.py" output="screen" >
+  </node>
 </launch>
