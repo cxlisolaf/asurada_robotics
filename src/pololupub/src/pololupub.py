@@ -9,7 +9,7 @@ from std_msgs.msg import Float64
 SERVO_CENTER = 6000
 
 def callback(data):
-    rospy.loginfo("I heard PID: " + str(data.data))
+#    rospy.loginfo("I heard PID: " + str(data.data))
     pwm = int(data.data)
     pololu = maestro.Controller()
     # pololu.setAccel(0, 10)
