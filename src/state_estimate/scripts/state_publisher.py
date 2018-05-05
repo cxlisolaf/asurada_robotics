@@ -9,8 +9,8 @@ CHANNEL_R_IR = 11
 WINDOW_SIZE = 10
 LEFT_LIMIT = 250
 RIGHT_LIMIT = 250
-RIGHT_LIMIT_DOOR = 100
-LEFT_LIMIT_DOOR = 100
+RIGHT_LIMIT_DOOR = 500
+LEFT_LIMIT_DOOR = 500
 LEFT_LIMIT_TURN = 400
 
 def publisher():
@@ -55,19 +55,19 @@ def publisher():
             rospy.loginfo('RIGHT ' + str(dist_right))
             count = 0
 
-        if dist_left < LEFT_LIMIT_TURN and dist_right > 200:
-            pass
-        elif dist_left > LEFT_LIMIT and dist_right < 250:
+#        if dist_left < LEFT_LIMIT_TURN and dist_right > 180:
+#            pass
+        if dist_left > LEFT_LIMIT:
             dist_left = LEFT_LIMIT
             if count == 10:
                 rospy.loginfo('LEFT LIMIT')
                 count = 0
-        elif dist_left > LEFT_LIMIT_DOOR and dist_right > RIGHT_LIMIT_DOOR:
-            dist_left = LEFT_LIMIT
-            dist_right = RIGHT_LIMIT
-            if count == 10:
-                rospy.loginfo('DOOR IGNORE')
-                count = 0
+#        elif dist_left < 300  and dist_right > RIGHT_LIMIT:
+#            dist_left = LEFT_LIMIT
+#            dist_right = RIGHT_LIMIT
+#            if count == 10:
+#                rospy.loginfo('DOOR IGNORE')
+#                count = 0
 
         count += 1
 #        elif dist_left > LEFT_LIMIT and dist_right > 250:
