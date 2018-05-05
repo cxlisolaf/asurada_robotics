@@ -3,9 +3,9 @@
 <group ns="PID_Corner">
     <node name="PID_Corner" pkg="pid" type="controller" output="screen" >
       <param name="node_name" value="steering_pid" />
-      <param name="Kp" value="33.0" />
+      <param name="Kp" value="36.0" />
       <param name="Ki" value="0.0" />
-      <param name="Kd" value="8.0" />
+      <param name="Kd" value="9.0" />
       <param name="upper_limit" value="1200" />
       <param name="lower_limit" value="-1200" />
       <param name="windup_limit" value="100" />
@@ -20,7 +20,7 @@
 <group ns="PID_Straight">
     <node name="PID_Straight" pkg="pid" type="controller" output="screen" >
       <param name="node_name" value="steering_pid" />
-      <param name="Kp" value="4.0" />
+      <param name="Kp" value="2.5" />
       <param name="Ki" value="0.0" />
       <param name="Kd" value="1.0" />
       <param name="upper_limit" value="1200" />

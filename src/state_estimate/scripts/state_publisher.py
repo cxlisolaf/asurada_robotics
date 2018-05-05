@@ -12,12 +12,12 @@ RIGHT_LIMIT = 250
 RIGHT_LIMIT_DOOR = 500
 LEFT_LIMIT_DOOR = 500
 LEFT_LIMIT_TURN = 400
+pololu = maestro.Controller()
 
 def publisher():
     pub = rospy.Publisher('state', Float64, queue_size=10)
     rospy.init_node('state_estimate', anonymous=True)
     rate = rospy.Rate(50)
-    pololu = maestro.Controller()
     window = [0] * WINDOW_SIZE
     index = 0
     count = 0
@@ -86,7 +86,7 @@ def publisher():
 
 def myhook():
     print "shutdown time!"
-
+    pololu.setTarget(1, 5000)
 rospy.on_shutdown(myhook)
 
 if __name__ == '__main__':

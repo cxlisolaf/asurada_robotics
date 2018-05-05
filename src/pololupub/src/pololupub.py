@@ -6,14 +6,19 @@ from std_msgs.msg import Float64
 
 #previously with old servo servo_center = 6300
 #new servo servo_center =6000
-SERVO_CENTER = 6000
+SERVO_CENTER = 6100
+motor_speed = 5700
+pololu = maestro.Controller()
+
+
 
 def callback(data):
 #    rospy.loginfo("I heard PID: " + str(data.data))
     pwm = int(data.data)
-    pololu = maestro.Controller()
-    # pololu.setAccel(0, 10)
+    global pololu
+# pololu.setAccel(0, 10)
     pololu.setTarget(0, SERVO_CENTER + pwm)
+    pololu.setTarget(1, motor_speed)
 
 def subscriber():
     rospy.init_node('pololu_sub', anonymous=True)
@@ -31,5 +36,6 @@ if __name__ == '__main__':
         # pololu.setTarget(1, 5000)
         subscriber()
 
-    except rospy.ROSInterruptException:
+    except rospy.ROSInterruptException:     
+        pololu.setTarget(1, 5000)
         pass

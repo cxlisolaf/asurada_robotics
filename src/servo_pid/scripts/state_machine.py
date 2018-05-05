@@ -12,13 +12,19 @@ ce_corner = 0
 # Positive value = Right of Center
 
 index = 0
+turn_counter = 0
 
 def callback(data):
     global index
     global count 
+    global turn_counter
     count = 10
 
-    if data.data < -180:
+    if turn_counter < 200: 
+        control_pub.publish(int(0))
+        turn_counter += 1
+        rospy.loginfo(str(turn_counter))
+    elif data.data < -180:
         control_pub.publish(ce_straight)
         if index == count:
             rospy.loginfo('CORNER!')
@@ -65,4 +71,4 @@ if __name__ == '__main__':
     try:
         main()
     except rospy.ROSInterruptException:
-        pass
+                pass
