@@ -1,3 +1,3 @@
 # asurada_robotics
 
-Code repo for advance robotics project: Asurada autonomous car
+Code repo for CSCI 5302 Advance Robotics project: Asurada autonomous car
