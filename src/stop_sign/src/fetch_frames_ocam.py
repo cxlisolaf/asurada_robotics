@@ -9,7 +9,7 @@ import os
 import numpy as np
 
 
-i_image = 0
+i_image = 10000
 
 
 
@@ -31,7 +31,7 @@ def callback(data):
         
         cv_image = CvBridge().imgmsg_to_cv2(data,'bgr8')
 	
-        if i_image%100 == 0:
+        if i_image%20 == 0:
             img_name = "frame"+str(i_image)+".jpg"
 	    cv2.imwrite(img_name, cv_image) 
             #img = cv2.imread("frame.jpg",0)

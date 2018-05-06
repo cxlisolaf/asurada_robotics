@@ -24,6 +24,7 @@ def callback(data):
         control_pub.publish(int(0))
         turn_counter += 1
         rospy.loginfo(str(turn_counter))
+        index = 0
     elif data.data < -180:
         control_pub.publish(ce_straight)
         if index == count:

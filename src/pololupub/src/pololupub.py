@@ -7,7 +7,8 @@ from std_msgs.msg import Float64
 #previously with old servo servo_center = 6300
 #new servo servo_center =6000
 SERVO_CENTER = 6100
-motor_speed = 5700
+#note to ryan 6450
+motor_speed = 6470
 pololu = maestro.Controller()
 
 
@@ -37,5 +38,5 @@ if __name__ == '__main__':
         subscriber()
 
     except rospy.ROSInterruptException:     
-        pololu.setTarget(1, 5000)
+        pololu.setTarget(1, 6200)
         pass

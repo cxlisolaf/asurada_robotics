@@ -50,10 +50,10 @@ def publisher():
         # print 'dist right: ' + str(dist_right)
 #        if dist_left < 250 and dist_right < 250:
 #            pass
-        if count == 10:
-            rospy.loginfo('LEFT ' + str(dist_left))
-            rospy.loginfo('RIGHT ' + str(dist_right))
-            count = 0
+#        if count == 10:
+#            rospy.loginfo('LEFT ' + str(dist_left))
+#            rospy.loginfo('RIGHT ' + str(dist_right))
+#            count = 0
 
 #        if dist_left < LEFT_LIMIT_TURN and dist_right > 180:
 #            pass
@@ -86,7 +86,7 @@ def publisher():
 
 def myhook():
     print "shutdown time!"
-    pololu.setTarget(1, 5000)
+    pololu.setTarget(1, 6200)
 rospy.on_shutdown(myhook)
 
 if __name__ == '__main__':

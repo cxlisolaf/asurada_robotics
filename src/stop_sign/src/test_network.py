@@ -13,7 +13,9 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import Bool
 import maestro
 
+counter=0
 model = load_model("stopsign_2.model")
+print "finish load model"
 
 def listener():
 
@@ -34,7 +36,7 @@ def callback(data):
         cv_image = CvBridge().imgmsg_to_cv2(data, "bgr8")
 	cv2.imwrite("frame.jpg",cv_image)
 
-        if counter%5 == 0:
+        if counter%3 == 0:
 
 	    image = cv2.imread("frame.jpg")
 
@@ -45,22 +47,24 @@ def callback(data):
 	    image = np.expand_dims(image, axis=0)
 
 	    # load the trained convolutional neural network
-	    print "[INFO] loading network..."
+	    #print "[INFO] loading network..."
 
 	    # classify the input image
 	    (nonstop, stop) = model.predict(image)[0]
 
 	    # build the label
-	    label = "stop" if stop > nonstop else "nonstop"
-	    proba = stop if stop > nonstop else nonstop
-	    label = "{}: {:.2f}%".format(label, proba * 100)
+	    label = "stop" if stop > 0.95 else "nonstop"
+	    proba = stop if stop > 0.95 else nonstop
+	    result = "{}: {:.2f}%".format(label, proba * 100)
 
-	    print label
+	    print result
 
             if label == "stop":
-                maestro.Controller().setTarget(1,3000)
+                maestro.Controller().setTarget(1,6200)
+                print "hold"
             else:
-                maestro.Controller().setTarget(1,6500)
+                maestro.Controller().setTarget(1,6400)
+                print "run"
 
 
     except CvBridgeError as e:
@@ -79,6 +83,5 @@ if __name__ == '__main__':
 
 
 
-    cv2.destroyAllWindows()
 
 

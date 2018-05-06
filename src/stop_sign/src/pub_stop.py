@@ -45,10 +45,10 @@ model.add(Dense(1))
 model.add(Activation('sigmoid'))
 print(4)
 model.compile(loss='binary_crossentropy',
-              optimizer='rmsprop',
+              optimizer='adam',
               metrics=['accuracy'])
 
-model.load_weights('first_try.h5')
+model.load_weights('fourth_theano.h5')
 
 
 def detect(image):
@@ -99,7 +99,7 @@ def callback(data):
             if pred == 1:
                 maestro.Controller().setTarget(1,3000)
             else:
-                maestro.Controller().setTarget(1,6500)
+                maestro.Controller().setTarget(1,6200)
 	#rospy.sleep(5)
 
     except CvBridgeError as e:
